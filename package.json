@@ -1,9 +1,9 @@
 {
-  "name": "webapps",
+  "name": "instaclone-back",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "type" : "module",
+  "description": "Instaclone backend",
+  "main": "src/index.js",
+  "type": "module",
   "scripts": {
     "serve": "nodemon --exec babel-node src/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -11,12 +11,13 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "cors": "^2.8.5",
     "express": "^4.17.1"
   },
   "devDependencies": {
-    "@babel/core": "^7.13.10",
-    "@babel/node": "^7.13.10",
-    "@babel/preset-env": "^7.13.10",
-    "nodemon": "^2.0.7"
+    "@babel/core": "^7.13.15",
+    "@babel/node": "^7.13.13",
+    "@babel/preset-env": "^7.13.15",
+    "nodemon": "^2.0.2"
   }
 }

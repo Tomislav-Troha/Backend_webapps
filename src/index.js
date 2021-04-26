@@ -1,16 +1,70 @@
+import express from 'express';
+import cors from 'cors';
 
-import express from 'express'
+import data from './Namirnice.js'
+import data_plan from './Prehrambeni_plan.js'
+import data_pojedinacno from './Pojedinacni_plan.js';
+
+ 
+
+const app = express()  // instanciranje aplikacije
+const port = 3200  // port na kojem će web server slušati
+
+app.use(cors());
+app.use(express.json());
+
+
+app.post('/', (req, res) => {
+    console.log("dobio sam post")
+    res.json({status: 'ok'})
+}),
+
+
+//namirnice
+
+app.get('/meso', (req, res) => res.json(data.meso));
+app.get('/kruh', (req, res) => res.json(data.kruh));
+app.get('/ribe', (req, res) => res.json(data.ribe));
+app.get('/brza_hrana', (req, res) => res.json(data.brza_hrana));
+app.get('/voce', (req, res) => res.json(data.voce));
+app.get('/povrce', (req, res) => res.json(data.povrce));
+app.get('/mlijecni_proizvodi', (req, res) => res.json(data.mlijecni_proizvodi));
+
+
+//prehrambeni plan za obitelj
+
+app.get('/ponedjeljak', (req, res) => res.json(data_plan.ponedjeljak));
+app.get('/utorak', (req, res) => res.json(data_plan.utorak));
+app.get('/srijeda', (req, res) => res.json(data_plan.srijeda));
+app.get('/cetvrtak', (req, res) => res.json(data_plan.cetvrtak));
+app.get('/petak', (req, res) => res.json(data_plan.petak));
+
+app.get('/subota', (req, res) => res.json(data_plan.subota));
+app.get('/nedljelja', (req, res) => res.json(data_plan.nedjelja));
+
+
+//pojedinacni plan
+
+//zene, mrsavljenje
+app.get('/zene/mrsavljenje', (req, res) => res.json(data_pojedinacno.zene_mrsavljenje));
+
+//zene, fitness
+app.get('/zene/fitnes', (req, res) => res.json(data_pojedinacno.zene_fitnes));
+
+//zene, trudnice
+app.get('/zene/trudnice', (req, res) => res.json(data_pojedinacno.zene_trudnice));
+
+
+//muski, mrsavljenje
+app.get('/muski/mrsavljenje', (req, res) => res.json(data_pojedinacno.muski_mrsavljenje));
+
+
+//muski, teretana
+app.get('/muski/teretana', (req, res) => res.json(data_pojedinacno.muski_teretana));
 
 
 
 
 
-const app = express()
-const port = 3000
 
-app.get ("/", (req, res) => { 
-    res.send("Hello world")
-    console.log("hello world")
-})
-
-app.listen(port, () => console.log(`Slusam na portu ${port}!`))
+app.listen(port, () => console.log(`Slušam na portu ${port}!`))
