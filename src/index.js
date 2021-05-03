@@ -20,10 +20,23 @@ app.post('/', (req, res) => {
 }),
 
 
-//namirnice
+//namirnice po id
 
-app.get('/meso', (req, res) => res.json(data.meso));
+app.get('/meso', (req, res) => res.json(data.meso.data));
+app.get('/meso/:id', (req, res) =>  {
+
+    let id = req.params.id
+    console.log("ID od mesa ", id);
+
+    res.json(data.meso.data.filter((x) => x.id == id))
+
+});
+
+//ostale namirnice
 app.get('/kruh', (req, res) => res.json(data.kruh));
+
+
+
 app.get('/ribe', (req, res) => res.json(data.ribe));
 app.get('/brza_hrana', (req, res) => res.json(data.brza_hrana));
 app.get('/voce', (req, res) => res.json(data.voce));
@@ -33,14 +46,14 @@ app.get('/mlijecni_proizvodi', (req, res) => res.json(data.mlijecni_proizvodi));
 
 //prehrambeni plan za obitelj
 
-app.get('/ponedjeljak', (req, res) => res.json(data_plan.ponedjeljak));
-app.get('/utorak', (req, res) => res.json(data_plan.utorak));
-app.get('/srijeda', (req, res) => res.json(data_plan.srijeda));
-app.get('/cetvrtak', (req, res) => res.json(data_plan.cetvrtak));
-app.get('/petak', (req, res) => res.json(data_plan.petak));
+app.get('/ponedjeljak', (req, res) => res.json(data_plan.ponedjeljak.data));
+app.get('/utorak', (req, res) => res.json(data_plan.utorak.data));
+app.get('/srijeda', (req, res) => res.json(data_plan.srijeda.data));
+app.get('/cetvrtak', (req, res) => res.json(data_plan.cetvrtak.data));
+app.get('/petak', (req, res) => res.json(data_plan.petak.data));
 
-app.get('/subota', (req, res) => res.json(data_plan.subota));
-app.get('/nedljelja', (req, res) => res.json(data_plan.nedjelja));
+app.get('/subota', (req, res) => res.json(data_plan.subota.data));
+app.get('/nedljelja', (req, res) => res.json(data_plan.nedjelja.data));
 
 
 //pojedinacni plan

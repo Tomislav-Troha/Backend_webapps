@@ -40,6 +40,20 @@ let data = {
 
         ]
     },
+
+    meso_jedan: {
+
+        data: [
+
+            {
+                id: "1",
+                naziv: "Pečena svinjetina",
+                kolicina: "90 grama",
+            
+            },
+
+        ]
+    },
         
     
     kruh: {
