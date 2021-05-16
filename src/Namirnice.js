@@ -8,33 +8,33 @@ let data = {
 
             {
                 id: "1",
-                naziv: "Pečena svinjetina",
-                kolicina: "90 grama",
+                naziv: "Pečena svinjetina (90 g)",
+                kolicina: "310",
             
             },
 
             {
                 id: "2",
-                naziv: "Mljeveno meso (govedina)",
-                kolicina: "90 grama",
+                naziv: "Mljeveno meso (govedina)(90 g)",
+                kolicina: "245",
             },
 
             {
                 id: "3",
-                naziv: "Pileći file",
-                kolicina: "90 grama",
+                naziv: "Pileći file (90 g)",
+                kolicina: "225",
             },
 
             {
                 id: "4",
-                naziv: "Pureći file",
-                kolicina: "90 grama",
+                naziv: "Pureći file (90 g)",
+                kolicina: "235",
             },
 
             {
                 id: "5",
-                naziv: "Biftek na roštilju",
-                kolicina: "90 grama",
+                naziv: "Biftek na roštilju (90 g)",
+                kolicina: "255",
             },
 
 
@@ -47,8 +47,8 @@ let data = {
 
             {
                 id: "1",
-                naziv: "Pečena svinjetina",
-                kolicina: "90 grama",
+                naziv: "Pečena svinjetina (90 g)",
+                kolicina: "310",
             
             },
 
@@ -63,31 +63,31 @@ let data = {
             {
                 id: "1",
                 naziv: "Kifla",
-                kolicina: "komad"
+                kolicina: "200"
             },
 
             {
                 id: "2",
                 naziv: "Dvopek",
-                kolicina: "1 šnjita"
+                kolicina: "95"
             },
 
             {
                 id: "3",
                 naziv: "Kukuruzni kruh",
-                kolicina: "1 šnjita"
+                kolicina: "200"
             },
 
             {
                 id: "4",
                 naziv: "Žemlja",
-                kolicina: "komad"
+                kolicina: "155"
             },
 
             {
                 id: "5",
                 naziv: "Kruh sa žitaricama",
-                kolicina: "1 šnjita"
+                kolicina: "65"
             },
 
         ]
@@ -100,31 +100,31 @@ let data = {
             {
                 id: "1",
                 naziv: "Salata od tunjevine",
-                kolicina: "90 grama"
+                kolicina: "190"
             },
 
             {
                 id: "2",
                 naziv: "Prženi bakalar",
-                kolicina: "90 grama"
+                kolicina: "145"
             },
 
             {
                 id: "3",
                 naziv: "Skuša",
-                kolicina: "90 grama"
+                kolicina: "200"
             },
 
             {
                 id: "4",
                 naziv: "Losos u konzervi",
-                kolicina: "90 grama"
+                kolicina: "120"
             },
 
             {
                 id: "5",
                 naziv: "Pastrva na roštilju",
-                kolicina: "90 grama"
+                kolicina: "175"
             },
 
         ]
@@ -137,31 +137,31 @@ let data = {
             {
                 id: "1",
                 naziv: "Hamburger",
-                kolicina: "245 grama"
+                kolicina: "245"
             },
 
             {
                 id: "2",
                 naziv: "Hot-dog",
-                kolicina: "280 grama"
+                kolicina: "280"
             },
 
             {
                 id: "3",
                 naziv: "Pileći sendvič",
-                kolicina: "500 grama"
+                kolicina: "500"
             },
 
             {
                 id: "4",
                 naziv: "Toast",
-                kolicina: "200 grama"
+                kolicina: "200"
             },
 
             {
                 id: "5",
                 naziv: "Pizza",
-                kolicina: "340 grama"
+                kolicina: "340"
             },
 
         ]
@@ -173,31 +173,31 @@ let data = {
             {
                 id: "1",
                 naziv: "Jabuka",
-                kolicina: "80 grama"
+                kolicina: "80"
             },
 
             {
                 id: "2",
                 naziv: "Marelice (3 komada)",
-                kolicina: "50 grama"
+                kolicina: "50"
             },
 
             {
                 id: "3",
                 naziv: "Banana",
-                kolicina: "80 grama"
+                kolicina: "105"
             },
 
             {
                 id: "4",
                 naziv: "Trešnje",
-                kolicina: "75 grama"
+                kolicina: "75"
             },
 
             {
                 id: "5",
                 naziv: "Cijeđena naranča (125 ml)",
-                kolicina: "55 grama"
+                kolicina: "20"
             },
 
 
@@ -212,31 +212,31 @@ let data = {
             {
                 id: "1",
                 naziv: "Kuhani grah",
-                kolicina: "125 grama"
+                kolicina: "125"
             },
             
             {
                 id: "2",
                 naziv: "Soja",
-                kolicina: "125 grama"
+                kolicina: "20"
             },
 
             {
                 id: "3",
                 naziv: "Kupus",
-                kolicina: "125 grama"
+                kolicina: "15"
             },
 
             {
                 id: "4",
                 naziv: "Kuhani kukuruz",
-                kolicina: "125 grama"
+                kolicina: "180"
             },
 
             {
                 id: "5",
                 naziv: "Kuhani kelj",
-                kolicina: "100 grama"
+                kolicina: "10"
             },
         ]
     },
@@ -248,31 +248,31 @@ let data = {
             {
                 id: "1",
                 naziv: "Miljeko (2% masnoće)",
-                kolicina: "125 grama"
+                kolicina: "125"
             },
 
             {
                 id: "2",
                 naziv: "Jogurt (nemasni)",
-                kolicina: "115 grama"
+                kolicina: "115"
             },
 
             {
                 id: "3",
                 naziv: "Čokolada",
-                kolicina: "200 grama"
+                kolicina: "200"
             },
 
             {
                 id: "4",
                 naziv: "Voćni jogurt (punomasni)",
-                kolicina: "340 grama"
+                kolicina: "340"
             },
 
             {
                 id: "5",
                 naziv: "Milkshake od vanilije",
-                kolicina: "410 grama"
+                kolicina: "410"
             },
         ]
     }

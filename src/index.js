@@ -8,7 +8,7 @@ import data_pojedinacno from './Pojedinacni_plan.js';
  
 
 const app = express()  // instanciranje aplikacije
-const port = 3200  // port na kojem će web server slušati
+const port = 3000  // port na kojem će web server slušati
 
 app.use(cors());
 app.use(express.json());
