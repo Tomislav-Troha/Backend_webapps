@@ -1,9 +1,8 @@
 import express from 'express';
 import cors from 'cors';
-
+import connect from './db.js'
 import data from './Namirnice.js'
-import data_plan from './Prehrambeni_plan.js'
-import data_pojedinacno from './Pojedinacni_plan.js';
+
 
  
 
@@ -20,10 +19,77 @@ app.post('/', (req, res) => {
 }),
 
 
+//namirnice po id, mongo
+app.get('/meso', async (req, res) => {
+    let db = await connect()
+
+    let cursor = await db.collection("meso").find()
+    let result = await cursor.toArray()
+
+    res.json(result)
+})
+
+app.get('/kruh', async (req, res) => {
+    let db = await connect()
+
+    let cursor = await db.collection("kruh").find()
+    let result = await cursor.toArray()
+
+    res.json(result)
+})
+
+app.get('/ribe', async (req, res) => {
+    let db = await connect()
+
+    let cursor = await db.collection("ribe").find()
+    let result = await cursor.toArray()
+
+    res.json(result)
+})
+
+app.get('/brza_hrana', async (req, res) => {
+    let db = await connect()
+
+    let cursor = await db.collection("brza_hrana").find()
+    let result = await cursor.toArray()
+
+    res.json(result)
+})
+
+app.get('/voce', async (req, res) => {
+    let db = await connect()
+
+    let cursor = await db.collection("voce").find()
+    let result = await cursor.toArray()
+
+    res.json(result)
+})
+
+app.get('/povrce', async (req, res) => {
+    let db = await connect()
+
+    let cursor = await db.collection("povrce").find()
+    let result = await cursor.toArray()
+
+    res.json(result)
+})
+
+app.get('/mlijecni_proizvodi', async (req, res) => {
+    let db = await connect()
+
+    let cursor = await db.collection("mlijecni_proizvodi").find()
+    let result = await cursor.toArray()
+
+    res.json(result)
+})
+
+
+
+
 //namirnice po id
 
-app.get('/meso', (req, res) => res.json(data.meso.data));
-app.get('/meso/:id', (req, res) =>  {
+app.get('/meso_memory', (req, res) => res.json(data.meso.data));
+app.get('/meso_memory/:id', (req, res) =>  {
 
     let id = req.params.id
     console.log("ID od mesa ", id);
@@ -33,47 +99,17 @@ app.get('/meso/:id', (req, res) =>  {
 });
 
 //ostale namirnice
-app.get('/kruh', (req, res) => res.json(data.kruh));
+app.get('/kruh_memory', (req, res) => res.json(data.kruh));
 
 
 
-app.get('/ribe', (req, res) => res.json(data.ribe));
-app.get('/brza_hrana', (req, res) => res.json(data.brza_hrana));
-app.get('/voce', (req, res) => res.json(data.voce));
-app.get('/povrce', (req, res) => res.json(data.povrce));
-app.get('/mlijecni_proizvodi', (req, res) => res.json(data.mlijecni_proizvodi));
+app.get('/ribe_memory', (req, res) => res.json(data.ribe));
+app.get('/brza_hrana_memory', (req, res) => res.json(data.brza_hrana));
+app.get('/voce_memory', (req, res) => res.json(data.voce));
+app.get('/povrce_memory', (req, res) => res.json(data.povrce));
+app.get('/mlijecni_proizvodi_memory', (req, res) => res.json(data.mlijecni_proizvodi));
 
 
-//prehrambeni plan za obitelj
-
-app.get('/ponedjeljak', (req, res) => res.json(data_plan.ponedjeljak.data));
-app.get('/utorak', (req, res) => res.json(data_plan.utorak.data));
-app.get('/srijeda', (req, res) => res.json(data_plan.srijeda.data));
-app.get('/cetvrtak', (req, res) => res.json(data_plan.cetvrtak.data));
-app.get('/petak', (req, res) => res.json(data_plan.petak.data));
-
-app.get('/subota', (req, res) => res.json(data_plan.subota.data));
-app.get('/nedljelja', (req, res) => res.json(data_plan.nedjelja.data));
-
-
-//pojedinacni plan
-
-//zene, mrsavljenje
-app.get('/zene/mrsavljenje', (req, res) => res.json(data_pojedinacno.zene_mrsavljenje));
-
-//zene, fitness
-app.get('/zene/fitnes', (req, res) => res.json(data_pojedinacno.zene_fitnes));
-
-//zene, trudnice
-app.get('/zene/trudnice', (req, res) => res.json(data_pojedinacno.zene_trudnice));
-
-
-//muski, mrsavljenje
-app.get('/muski/mrsavljenje', (req, res) => res.json(data_pojedinacno.muski_mrsavljenje));
-
-
-//muski, teretana
-app.get('/muski/teretana', (req, res) => res.json(data_pojedinacno.muski_teretana));
 
 
 
