@@ -23,7 +23,7 @@ export default () => {
                 reject("Doslo je do greske " + err)
             }
             else {
-                console.log("Uspijesno spajanje na bazu")
+               // console.log("Uspijesno spajanje na bazu")
                 db = client.db("namirnice")
                 resolve(db)
             }

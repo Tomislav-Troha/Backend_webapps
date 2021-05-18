@@ -2,7 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import connect from './db.js'
 import data from './Namirnice.js'
-
+import mongo from 'mongodb'
 
  
 
@@ -17,6 +17,72 @@ app.post('/', (req, res) => {
     console.log("dobio sam post")
     res.json({status: 'ok'})
 }),
+
+
+app.patch("/SpremiTjedan/:id", async (req, res) => {
+    let id = req.params.id;
+    let data = req.body;
+    
+
+    let db = await connect();
+
+    let result = await db.collection("SpremiTjedan").updateOne(
+        { _id: mongo.ObjectId(id) },
+        {
+           $set: data,
+        }
+    )
+
+    if(result && result.modifiedCount == 1) {
+       let doc = await db.collection("SpremiTjedan").findOne({_id: mongo.ObjectID(id)})
+       res.json(doc)
+
+    } else {
+        res.json({
+            status:"fail"
+        })
+    }
+
+
+    });
+
+
+app.post("/SpremiTjedan", async (req, res) => {
+    let data = req.body
+
+    let db = await connect();
+
+    let result = await db.collection('SpremiTjedan').insertOne(data);
+
+    if(result && result.insertedCount == 1){
+        res.json(result.ops[0]);
+    } else {
+        res.json({
+            status:"fail"
+        })
+    }
+})
+
+app.get('/SpremiTjedan', async (req, res) => {
+    let db = await connect()
+
+    let cursor = await db.collection("SpremiTjedan").find()
+    let result = await cursor.toArray()
+
+    res.json(result)
+})
+
+app.get("/SpremiTjedan/:id", async (req, res) => {
+    let id = req.params.id;
+    let db = await connect();
+
+    let doc = await db.collection("SpremiTjedan").findOne({_id: mongo.ObjectID(id)})
+    res.json(doc)
+
+   
+
+    });
+
 
 
 //namirnice po id, mongo
