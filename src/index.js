@@ -7,10 +7,11 @@ import mongo from 'mongodb'
  
 
 const app = express()  // instanciranje aplikacije
-const port = 3000  // port na kojem će web server slušati
+const port = 3200  // port na kojem će web server slušati
 
 app.use(cors());
 app.use(express.json());
+
 
 
 app.post('/', (req, res) => {
@@ -20,8 +21,11 @@ app.post('/', (req, res) => {
 
 
 app.patch("/SpremiTjedan/:id", async (req, res) => {
+    
+    
     let id = req.params.id;
     let data = req.body;
+    
     
 
     let db = await connect();

@@ -3,6 +3,10 @@ import mongo from "mongodb"
 
 let connection_string = "mongodb+srv://admin:admin@cluster0.wbrjl.mongodb.net/namirnice?retryWrites=true&w=majority";
 
+
+
+
+
 let client = new mongo.MongoClient(connection_string, {
     useNewUrlParser: true,
     useUnifiedTopology: true
