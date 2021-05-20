@@ -13,11 +13,54 @@ app.use(cors());
 app.use(express.json());
 
 
-
 app.post('/', (req, res) => {
     console.log("dobio sam post")
     res.json({status: 'ok'})
 }),
+
+app.get('/pojedinacniPlan', async (req, res) => {
+    let db = await connect()
+
+    let cursor = await db.collection("pojedinacniPlan").find()
+    let result = await cursor.toArray()
+
+    res.json(result)
+})
+
+app.get("/pojedinacniPlan/:id", async (req, res) => {
+    let id = req.params.id;
+    let db = await connect();
+
+    let doc = await db.collection("pojedinacniPlan").findOne({_id: mongo.ObjectID(id)})
+    res.json(doc)
+
+   
+
+    });
+
+
+app.patch("/pojedinacniPlan/:id", async (req, res) => {
+    let id = req.params.id
+    let data = req.body
+
+    let db = await connect();
+
+    let result = await db.collection("pojedinacniPlan").updateOne(
+        {_id: mongo.ObjectID(id) },
+        {
+            $set: data,
+        }
+    )
+
+    if(result && result.modifiedCount == 1) {
+        let doc = await db.collection("pojedinacniPlan").findOne({_id:mongo.ObjectID(id)})
+        res.json(doc)
+    } else {
+        res.json({
+            status:"fail"
+        })
+    }
+})
 
 
 app.patch("/SpremiTjedan/:id", async (req, res) => {
