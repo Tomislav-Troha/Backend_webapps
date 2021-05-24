@@ -1,8 +1,12 @@
+import dotenv from "dotenv"
+dotenv.config();
+
 import express from 'express';
 import cors from 'cors';
 import connect from './db.js'
 import data from './Namirnice.js'
 import mongo from 'mongodb'
+import auth from './auth.js';
 
  
 
@@ -18,7 +22,51 @@ app.post('/', (req, res) => {
     res.json({status: 'ok'})
 }),
 
-app.get('/pojedinacniPlan', async (req, res) => {
+
+app.get("/tajna", [auth.verify] ,(req, res) => {
+
+    res.json({message: "Ovo je tajna " + req.jwt.email})
+})
+
+app.post("/auth", async (req, res) => {
+    let user = req.body
+
+    try {
+       let result = await auth.authUser(user.email, user.lozinka )
+       res.json(result)
+    }
+    catch(e) {
+        res.status(401).json({error: e.message})
+
+    }
+})
+
+
+app.post("/users", async (req, res) => {
+
+    let user = req.body;
+
+    let id;
+
+    try{
+    id = await auth.registerUser(user)
+    }
+    catch (e){
+        res.status(500).json({error: e.message})
+    }
+    res.json({id: id})
+})
+
+
+
+
+
+
+
+//----------POJEDINACNI PLAN-----------//
+
+
+app.get('/pojedinacniPlan', [auth.verify] ,async (req, res) => {
     let db = await connect()
 
     let cursor = await db.collection("pojedinacniPlan").find()
@@ -39,7 +87,7 @@ app.get("/pojedinacniPlan/:id", async (req, res) => {
     });
 
 
-app.patch("/pojedinacniPlan/:id", async (req, res) => {
+app.patch("/pojedinacniPlan/:id", [auth.verify] ,async (req, res) => {
     let id = req.params.id
     let data = req.body
 
@@ -63,7 +111,10 @@ app.patch("/pojedinacniPlan/:id", async (req, res) => {
 })
 
 
-app.patch("/SpremiTjedan/:id", async (req, res) => {
+//----------SpremiPoTjednu-----------//
+
+
+app.patch("/SpremiTjedan/:id", [auth.verify] ,async (req, res) => {
     
     
     let id = req.params.id;
@@ -94,7 +145,7 @@ app.patch("/SpremiTjedan/:id", async (req, res) => {
     });
 
 
-app.post("/SpremiTjedan", async (req, res) => {
+app.post("/SpremiTjedan",[auth.verify] , async (req, res) => {
     let data = req.body
 
     let db = await connect();
@@ -110,7 +161,7 @@ app.post("/SpremiTjedan", async (req, res) => {
     }
 })
 
-app.get('/SpremiTjedan', async (req, res) => {
+app.get('/SpremiTjedan', [auth.verify] ,async (req, res) => {
     let db = await connect()
 
     let cursor = await db.collection("SpremiTjedan").find()
@@ -132,8 +183,10 @@ app.get("/SpremiTjedan/:id", async (req, res) => {
 
 
 
-//namirnice po id, mongo
-app.get('/meso', async (req, res) => {
+//------namirnice po id, mongo---------//
+
+
+app.get('/meso',[auth.verify]  ,async (req, res) => {
     let db = await connect()
 
     let cursor = await db.collection("meso").find()
