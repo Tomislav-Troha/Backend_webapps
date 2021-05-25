@@ -11,7 +11,7 @@ import auth from './auth.js';
  
 
 const app = express()  // instanciranje aplikacije
-const port = 3200  // port na kojem će web server slušati
+const port = 3000  // port na kojem će web server slušati
 
 app.use(cors());
 app.use(express.json());
@@ -43,18 +43,20 @@ app.post("/auth", async (req, res) => {
 
 
 app.post("/users", async (req, res) => {
-
+ 
     let user = req.body;
-
     let id;
+    
 
     try{
     id = await auth.registerUser(user)
+    
     }
     catch (e){
-        res.status(500).json({error: e.message})
+      return res.status(500).json({error: e.message})
     }
-    res.json({id: id})
+    return res.json({id: id})
+    
 })
 
 
@@ -97,7 +99,8 @@ app.patch("/pojedinacniPlan/:id", [auth.verify] ,async (req, res) => {
         {_id: mongo.ObjectID(id) },
         {
             $set: data,
-        }
+        },
+        
     )
 
     if(result && result.modifiedCount == 1) {
@@ -170,7 +173,7 @@ app.get('/SpremiTjedan', [auth.verify] ,async (req, res) => {
     res.json(result)
 })
 
-app.get("/SpremiTjedan/:id", async (req, res) => {
+app.get("/SpremiTjedan/:id", [auth.verify] ,async (req, res) => {
     let id = req.params.id;
     let db = await connect();
 
@@ -186,7 +189,7 @@ app.get("/SpremiTjedan/:id", async (req, res) => {
 //------namirnice po id, mongo---------//
 
 
-app.get('/meso',[auth.verify]  ,async (req, res) => {
+app.get('/meso',async (req, res) => {
     let db = await connect()
 
     let cursor = await db.collection("meso").find()
