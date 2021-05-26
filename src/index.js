@@ -36,7 +36,7 @@ app.post("/auth", async (req, res) => {
        res.json(result)
     }
     catch(e) {
-        res.status(401).json({error: e.message})
+      return  res.status(401).json({error: e.message})
 
     }
 })
