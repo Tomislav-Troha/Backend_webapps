@@ -28,9 +28,38 @@ export default {
       kalorijeZene: userData.kalorijeZene
     }
 
+    let docObiteljski = {
+      email: userData.email,
+      radni_dan: userData.radni_dan,
+      Pdorucak: userData.Pdorucak,
+      Prucak: userData.Prucak,
+      Pvecera: userData.Pvecera,
+      Udorucak: userData.Udorucak,
+      Urucak: userData.Urucak,
+      Uvecera: userData.Uvecera,
+      Sdorucak: userData.Sdorucak,
+      Srucak: userData.Srucak,
+      Svecera: userData.Svecera,
+      Cdorucak: userData.Cdorucak,
+      Crucak: userData.Crucak,
+      Cvecera: userData.Cvecera,
+      PEdorucak: userData.PEdorucak,
+      PErucak: userData.PErucak,
+      PEvecera: userData.PEvecera,
+      SUdorucak: userData.SUdorucak,
+      SUrucak:  userData.SUrucak,
+      SUvecera: userData.SUvecera,
+      Ndorucak: userData.Ndorucak,
+      Nrucak: userData.Nrucak,
+      Nvecera: userData.Nvecera
+
+
+    }
+
     try {
       let result = await db.collection('users').insertOne(doc)
       let resultPojedinacni = await db.collection('pojedinacniPlan').insertOne(docPojedinacni)
+      let resultObiteljski = await db.collection('SpremiTjedan').insertOne(docObiteljski)
       if (result && result.insertedId) {
         return result.insertedId
       }

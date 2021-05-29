@@ -91,23 +91,23 @@ app.patch('/pojedinacniPlan/:email', [auth.verify], async (req, res) => {
 
 //----------SpremiPoTjednu-----------//
 
-app.patch('/SpremiTjedan/:id', [auth.verify], async (req, res) => {
-  let id = req.params.id
+app.patch('/SpremiTjedan/:email', [auth.verify], async (req, res) => {
+  let email = req.params.email
   let data = req.body
 
   let db = await connect()
 
   let result = await db.collection('SpremiTjedan').updateOne(
-    { _id: mongo.ObjectId(id) },
+    { email: email },
     {
       $set: data
     }
   )
-
+ //console.log(data)
   if (result && result.modifiedCount == 1) {
     let doc = await db
       .collection('SpremiTjedan')
-      .findOne({ _id: mongo.ObjectID(id) })
+      .findOne({ email: email })
     res.json(doc)
   } else {
     res.json({
@@ -141,13 +141,13 @@ app.get('/SpremiTjedan', [auth.verify], async (req, res) => {
   res.json(result)
 })
 
-app.get('/SpremiTjedan/:id', [auth.verify], async (req, res) => {
-  let id = req.params.id
+app.get('/SpremiTjedan/:email', [auth.verify], async (req, res) => {
+  let email = req.params.email
   let db = await connect()
 
   let doc = await db
     .collection('SpremiTjedan')
-    .findOne({ _id: mongo.ObjectID(id) })
+    .findOne({ email: email })
   res.json(doc)
 })
 
