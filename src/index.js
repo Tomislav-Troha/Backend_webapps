@@ -78,6 +78,29 @@ app.get("/users/:email", async (req, res) => {
   res.json(doc);
 });
 
+app.patch("/users/:email", [auth.verify], async (req, res) => {
+  let email = req.params.email;
+  let data = req.body;
+
+  let db = await connect();
+
+  let result = await db.collection("users").updateOne(
+    { email: email },
+    {
+      $set: data,
+    }
+  );
+  //console.log(data, email)
+  if (result && result.modifiedCount == 1) {
+    let doc = await db.collection("users").findOne({ email: email });
+    res.json(doc);
+  } else {
+    res.json({
+      status: "fail",
+    });
+  }
+});
+
 //----------POJEDINACNI PLAN-----------//
 
 app.get("/pojedinacniPlan", [auth.verify], async (req, res) => {
@@ -180,6 +203,16 @@ app.get("/SpremiTjedan/:email", [auth.verify], async (req, res) => {
 
 //UserProfile
 
+app.get("/UserProfile/:email", [auth.verify], async (req, res) => {
+  let email = req.params.email;
+  let db = await connect();
+  console.log("ovo je email", email);
+  let doc = await db.collection("UserProfile").findOne({ email: email });
+
+  console.log(doc);
+  res.json(doc);
+});
+
 app.post("/UserProfile/:email", [auth.verify], async (req, res) => {
   let email = req.params.email;
   let data = req.body;
@@ -189,17 +222,14 @@ app.post("/UserProfile/:email", [auth.verify], async (req, res) => {
   let result = await db.collection("UserProfile").insert(
     {
       email: email,
-      ime: data.ime,
-      prezime: data.prezime,
-      spol: data.spol,
-      datumRodenja: data.datumRodenja,
-      zanimanje: data.zanimanje,
+      imeRoditelja: data.imeRoditelja,
+      imeDjece: data.imeDjece,
     },
     {
       $set: data,
     }
   );
-  //console.log(data)
+  //console.log(nadimak);
   if (result && result.modifiedCount == 1) {
     let doc = await db.collection("UserProfile").findOne({ email: email });
     res.json(doc);

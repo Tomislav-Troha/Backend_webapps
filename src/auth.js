@@ -54,15 +54,6 @@ export default {
       Nvecera: userData.Nvecera,
     };
 
-    let UserProfile = {
-      email: userData.email,
-      ime: userData.ime,
-      prezime: userData.prezime,
-      spol: userData.spol,
-      datumRodenja: userData.datumRodenja,
-      zanimanje: userData.zanimanje,
-    };
-
     try {
       let result = await db.collection("users").insertOne(doc);
       let resultPojedinacni = await db
@@ -71,9 +62,6 @@ export default {
       let resultObiteljski = await db
         .collection("SpremiTjedan")
         .insertOne(docObiteljski);
-      let resultUserProfile = await db
-        .collection("UserProfile")
-        .insertOne(UserProfile);
       if (result && result.insertedId) {
         return result.insertedId;
       }
