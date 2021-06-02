@@ -9,7 +9,7 @@ import mongo from "mongodb";
 import auth from "./auth.js";
 
 const app = express(); // instanciranje aplikacije
-const port = 3100; // port na kojem će web server slušati
+const port = 3000; // port na kojem će web server slušati
 
 app.use(cors());
 app.use(express.json());
@@ -35,6 +35,7 @@ app.patch("/users", [auth.verify], async (req, res) => {
       changes.old_password,
       changes.new_password
     );
+    //console.log(changes.old_password);
     if (result) {
       res.status(201).send();
     } else {
