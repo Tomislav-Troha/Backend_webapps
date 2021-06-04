@@ -9,10 +9,11 @@ import mongo from "mongodb";
 import auth from "./auth.js";
 
 const app = express(); // instanciranje aplikacije
-const port = 3000; // port na kojem će web server slušati
+const port = 3100; // port na kojem će web server slušati
 
 app.use(cors());
 app.use(express.json());
+app.use("/api/private", auth.permit("admin"));
 
 app.post("/", (req, res) => {
   console.log("dobio sam post");
@@ -21,6 +22,45 @@ app.post("/", (req, res) => {
   app.get("/tajna", [auth.verify], (req, res) => {
     res.json({ message: "Ovo je tajna " + req.jwt.email });
   });
+
+//uzmi sve podatke za admina
+
+app.get("/admin", auth.permit("admin"), async (req, res) => {
+  let db = await connect();
+
+  let cursor = await db.collection("users").find();
+  let result = await cursor.toArray();
+
+  res.json(result);
+});
+
+app.get("/admin/:email", auth.permit("admin"), async (req, res) => {
+  let db = await connect();
+
+  let doc = await db.collection("users").findOne({ role: "admin" });
+  //console.log(doc);
+
+  res.json(doc);
+});
+
+//brisi podatke, samo admin
+
+app.post("/admin/:email", auth.permit("admin"), async (req, res) => {
+  let email = req.body.email;
+
+  let db = await connect();
+  //console.log(email);
+  let result = await db.collection("users").deleteOne({ email: email });
+  //console.log(result);
+
+  if (result && result.deletedCount == 1) {
+    res.json({ status: "Izbrisano" });
+  } else {
+    res.json({
+      status: "fail",
+    });
+  }
+});
 
 //promjena lozinke
 
@@ -79,28 +119,33 @@ app.get("/users/:email", async (req, res) => {
   res.json(doc);
 });
 
-app.patch("/users/:email", [auth.verify], async (req, res) => {
-  let email = req.params.email;
-  let data = req.body;
+app.patch(
+  "/users/:email",
+  [auth.verify],
 
-  let db = await connect();
+  async (req, res) => {
+    let email = req.params.email;
+    let data = req.body;
 
-  let result = await db.collection("users").updateOne(
-    { email: email },
-    {
-      $set: data,
+    let db = await connect();
+
+    let result = await db.collection("users").updateOne(
+      { email: email },
+      {
+        $set: data,
+      }
+    );
+    //console.log(data, email)
+    if (result && result.modifiedCount == 1) {
+      let doc = await db.collection("users").findOne({ email: email });
+      res.json(doc);
+    } else {
+      res.json({
+        status: "fail",
+      });
     }
-  );
-  //console.log(data, email)
-  if (result && result.modifiedCount == 1) {
-    let doc = await db.collection("users").findOne({ email: email });
-    res.json(doc);
-  } else {
-    res.json({
-      status: "fail",
-    });
   }
-});
+);
 
 //----------POJEDINACNI PLAN-----------//
 

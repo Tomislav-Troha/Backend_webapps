@@ -2,6 +2,7 @@ import mongo from "mongodb";
 import connect from "./db.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+
 (async () => {
   let db = await connect();
   await db.collection("users").createIndex({ email: 1 }, { unique: true });
@@ -131,5 +132,24 @@ export default {
     } catch (e) {
       return res.status(401).send();
     }
+  },
+
+  permit(...permittedRoles) {
+    // return a middleware
+    return (req, res, next) => {
+      let authorization = req.headers.authorization.split(" ");
+      let type = authorization[0];
+      let token = authorization[1];
+
+      let user = req.jwt;
+      user = jwt.verify(token, process.env.JWT_SECRET);
+      //console.log(user);
+
+      if (user && permittedRoles.includes(user.role)) {
+        next(); //role is allowed, so continue on the next middleware
+      } else {
+        res.status(403).json({ message: "Forbidden" }); // user is forbidden
+      }
+    };
   },
 };
