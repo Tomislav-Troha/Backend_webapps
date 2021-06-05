@@ -51,9 +51,21 @@ app.post("/admin/:email", auth.permit("admin"), async (req, res) => {
   let db = await connect();
   //console.log(email);
   let result = await db.collection("users").deleteOne({ email: email });
+
+  let pojedinacni = await db
+    .collection("pojedinacniPlan")
+    .deleteOne({ email: email });
+
+  let obiteljski = await db
+    .collection("SpremiTjedan")
+    .deleteOne({ email: email });
   //console.log(result);
 
-  if (result && result.deletedCount == 1) {
+  if (
+    (obiteljski && obiteljski.deletedCount == 1) ||
+    (pojedinacni && pojedinacni.deletedCount == 1) ||
+    (result && result.deletedCount == 1)
+  ) {
     res.json({ status: "Izbrisano" });
   } else {
     res.json({
