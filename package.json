@@ -4,7 +4,7 @@
   "description": "Instaclone backend",
   "main": "src/index.js",
   "type": "module",
-  "engines": {"node": "15.12.0"},
+  "engines": {"node": "14.x"},
   "scripts": {
     "serve": "nodemon --exec babel-node src/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
