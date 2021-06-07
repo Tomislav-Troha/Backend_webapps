@@ -9,10 +9,13 @@ import mongo from "mongodb";
 import auth from "./auth.js";
 
 const app = express(); // instanciranje aplikacije
-const port = 3100; // port na kojem će web server slušati
+const port = 3000; // port na kojem će web server slušati
 
 app.use(cors());
 app.use(express.json());
+const http = "http";
+const hostname = "backendwebapps.vercel.app";
+
 app.use("/api/private", auth.permit("admin"));
 
 app.post("/", (req, res) => {
@@ -424,4 +427,4 @@ app.get("/mlijecni_proizvodi_memory", (req, res) =>
   res.json(data.mlijecni_proizvodi)
 );
 
-app.listen(port, () => console.log(`Slušam na portu ${port}!`));
+app.listen(port, () => console.log(`Slušam na portu http://${hostname}/`));
