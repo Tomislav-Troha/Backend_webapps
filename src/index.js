@@ -25,7 +25,7 @@ app.post("/", (req, res) => {
 
 //uzmi sve podatke za admina
 
-app.get("/admin", auth.permit("admin"), async (req, res) => {
+app.get("/admin", [auth.verify], auth.permit("admin"), async (req, res) => {
   let db = await connect();
 
   let cursor = await db.collection("users").find();
@@ -34,45 +34,55 @@ app.get("/admin", auth.permit("admin"), async (req, res) => {
   res.json(result);
 });
 
-app.get("/admin/:email", auth.permit("admin"), async (req, res) => {
-  let db = await connect();
+app.get(
+  "/admin/:email",
+  [auth.verify],
+  auth.permit("admin"),
+  async (req, res) => {
+    let db = await connect();
 
-  let doc = await db.collection("users").findOne({ role: "admin" });
-  //console.log(doc);
+    let doc = await db.collection("users").findOne({ role: "admin" });
+    //console.log(doc);
 
-  res.json(doc);
-});
+    res.json(doc);
+  }
+);
 
 //brisi podatke, samo admin
 
-app.post("/admin/:email", auth.permit("admin"), async (req, res) => {
-  let email = req.body.email;
+app.post(
+  "/admin/:email",
+  [auth.verify],
+  auth.permit("admin"),
+  async (req, res) => {
+    let email = req.body.email;
 
-  let db = await connect();
-  //console.log(email);
-  let result = await db.collection("users").deleteOne({ email: email });
+    let db = await connect();
+    //console.log(email);
+    let result = await db.collection("users").deleteOne({ email: email });
 
-  let pojedinacni = await db
-    .collection("pojedinacniPlan")
-    .deleteOne({ email: email });
+    let pojedinacni = await db
+      .collection("pojedinacniPlan")
+      .deleteOne({ email: email });
 
-  let obiteljski = await db
-    .collection("SpremiTjedan")
-    .deleteOne({ email: email });
-  //console.log(result);
+    let obiteljski = await db
+      .collection("SpremiTjedan")
+      .deleteOne({ email: email });
+    //console.log(result);
 
-  if (
-    (obiteljski && obiteljski.deletedCount == 1) ||
-    (pojedinacni && pojedinacni.deletedCount == 1) ||
-    (result && result.deletedCount == 1)
-  ) {
-    res.json({ status: "Izbrisano" });
-  } else {
-    res.json({
-      status: "fail",
-    });
+    if (
+      (obiteljski && obiteljski.deletedCount == 1) ||
+      (pojedinacni && pojedinacni.deletedCount == 1) ||
+      (result && result.deletedCount == 1)
+    ) {
+      res.json({ status: "Izbrisano" });
+    } else {
+      res.json({
+        status: "fail",
+      });
+    }
   }
-});
+);
 
 //promjena lozinke
 
@@ -159,16 +169,46 @@ app.patch(
   }
 );
 
-//----------POJEDINACNI PLAN-----------//
+//TRAZI
 
-app.get("/pojedinacniPlan", [auth.verify], async (req, res) => {
-  let db = await connect();
+app.get(
+  "/admin/search/one",
+  [auth.verify],
+  auth.permit("admin"),
+  async (req, res) => {
+    let db = await connect();
+    let query = req.query;
 
-  let cursor = await db.collection("pojedinacniPlan").find();
-  let result = await cursor.toArray();
+    let selekcija = {};
 
-  res.json(result);
-});
+    if (query.name) {
+      selekcija.name = new RegExp(query.name);
+    }
+
+    if (query.name2) {
+      let pretraga = query.name2;
+      let terms = pretraga.split(" ");
+
+      selekcija = {
+        $and: [],
+      };
+
+      terms.forEach((term) => {
+        //console.log("unutar petelje", term);
+        let or = {
+          $or: [{ email: new RegExp(term) }],
+        };
+
+        selekcija.$and.push(or);
+      });
+    }
+
+    let cursor = await db.collection("users").find(selekcija);
+    let results = await cursor.toArray();
+
+    res.json(results);
+  }
+);
 
 app.get("/pojedinacniPlan/:email", [auth.verify], async (req, res) => {
   let email = req.params.email;
