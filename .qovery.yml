@@ -1,0 +1,14 @@
+---
+application:
+  name: "backend-webapps"
+  project: "Wapps-FH"
+  organization: "QoveryCommunity"
+databases:
+- type: "MONGODB"
+  name: "namirnice"
+routers:
+- name: "main-backend-webapps"
+  routes:
+  - application_name: "backend-webapps"
+    paths:
+    - "/*"
