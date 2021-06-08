@@ -14,7 +14,10 @@ const port = process.env.PORT || 3000; // port na kojem će web server slušati
 app.use(cors());
 app.use(express.json());
 
-app.listen(port, () => console.log(`Slušam na portu ${port}`));
+const server = app.listen(process.env.PORT || 5000, () => {
+  const port = server.address().port;
+  console.log(`Express is working on port ${port}`);
+});
 
 //--------------------//
 
