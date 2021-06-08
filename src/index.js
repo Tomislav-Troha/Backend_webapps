@@ -9,10 +9,15 @@ import mongo from "mongodb";
 import auth from "./auth.js";
 
 const app = express(); // instanciranje aplikacije
-const port = 3000; // port na kojem će web server slušati
+const port = process.env.PORT || 3000; // port na kojem će web server slušati
 
 app.use(cors());
 app.use(express.json());
+
+app.listen(port, () => console.log(`Slušam na portu ${port}`));
+
+//--------------------//
+
 app.use("/api/private", auth.permit("admin"));
 
 app.post("/", (req, res) => {
@@ -423,5 +428,3 @@ app.get("/povrce_memory", (req, res) => res.json(data.povrce));
 app.get("/mlijecni_proizvodi_memory", (req, res) =>
   res.json(data.mlijecni_proizvodi)
 );
-
-app.listen(port, () => console.log(`Slušam na portu ${port}!`));
