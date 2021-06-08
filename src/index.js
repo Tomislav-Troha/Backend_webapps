@@ -9,14 +9,15 @@ import mongo from "mongodb";
 import auth from "./auth.js";
 
 const app = express(); // instanciranje aplikacije
-const port = process.env.PORT || 3000; // port na kojem će web server slušati
+//const port = process.env.PORT || 3000; // port na kojem će web server slušati
 
 app.use(cors());
 app.use(express.json());
 
-const server = app.listen(process.env.PORT || 5000, () => {
-  const port = server.address().port;
-  console.log(`Express is working on port ${port}`);
+const port = process.env.PORT || 3100;
+
+app.listen(port, function () {
+  console.log("Server se slusa na portu", port);
 });
 
 //--------------------//
