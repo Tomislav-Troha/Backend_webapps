@@ -27,6 +27,10 @@ export default {
       ciljZene: userData.ciljZene,
       kalorijeMuski: userData.kalorijeMuski,
       kalorijeZene: userData.kalorijeZene,
+      godina: userData.godina,
+      dorucak: userData.dorucak,
+      rucak: userData.rucak,
+      vecera: userData.vecera,
     };
 
     let docObiteljski = {
